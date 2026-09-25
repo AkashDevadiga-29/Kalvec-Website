@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/**
+ * Custom design tokens for Kalvec Website
+ * Matches extracted Figma specifications and brand guide.
+ */
+@theme {
+  --color-primary: #81222F;
+  --color-dark: #1A1A1A;
+  --color-dark-hover: #000000;
+  --color-accent-blue: #3157BF;
+  --color-card-bg: rgba(0, 0, 0, 0.20);
+
+  --font-serif: "Source Serif Pro", Georgia, serif;
+  --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Base resets & typography */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: #81222F;
+  font-family: var(--font-sans);
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Custom text utility for tight serif headings */
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+/**
+ * Altalogy-style logo carousel animation
+ * Staggered moveUp transition with blur and opacity easing
+ */
+@keyframes altalogyMoveUp {
+  0% {
+    transform: translateY(24px);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  20%, 80% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translateY(-24px);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+.animate-altalogy-logo {
+  animation: altalogyMoveUp 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  will-change: transform, filter, opacity;
+}
+
