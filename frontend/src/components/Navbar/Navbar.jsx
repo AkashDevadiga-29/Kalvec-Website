@@ -1,35 +1,8 @@
 import React from 'react';
 import IconButton from '../ui/IconButton';
-import NavButtons from './NavButtons';
+import NavButtons, { PhoneIcon, AtIcon } from './NavButtons';
 import NavLogo from './NavLogo';
 import SocialButtons from './SocialButtons';
-
-/**
- * Custom telephone handset icon SVG for the "Discuss your project" button.
- */
-function PhoneIcon({ className = 'w-3.5 h-3.5 text-white' }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.59 3.68a1 1 0 01-.24 1.02l-2.23 2.09z" />
-    </svg>
-  );
-}
-
-/**
- * At (@) symbol badge icon for "Write to us" button.
- */
-function AtIcon({ className = 'text-white text-xs md:text-sm font-semibold' }) {
-  return (
-    <span className={className} aria-hidden="true">
-      @
-    </span>
-  );
-}
 
 /**
  * Navbar component for the Kalvec website hero section.

@@ -29,7 +29,7 @@ export default function IconButton({
     <>
       {icon && (
         <span
-          className="flex items-center justify-center shrink-0 w-6 h-6 md:w-7 md:h-7"
+          className="flex items-center justify-center shrink-0 w-[26px] h-[26px] md:w-[30px] md:h-[30px] overflow-hidden select-none"
           style={{ backgroundColor: iconBg }}
         >
           {icon}
@@ -47,8 +47,8 @@ export default function IconButton({
     'inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] text-white transition-colors duration-200 cursor-pointer select-none';
 
   const shapeStyles = isSquare
-    ? 'w-10 h-10 md:w-11 md:h-11 p-2'
-    : 'h-10 md:h-11 px-3 md:px-3.5 py-2 gap-2 md:gap-2.5';
+    ? 'w-10 h-10 md:w-11 md:h-11'
+    : 'h-10 md:h-11 pl-1.5 md:pl-2 pr-3 md:pr-3.5 gap-2 md:gap-2.5';
 
   return (
     <a

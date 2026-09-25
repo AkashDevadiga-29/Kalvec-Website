@@ -19,33 +19,33 @@ export default function SocialButtons({
 }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {/* LinkedIn Button */}
+      {/* LinkedIn Button (30px icon in 44px container on desktop matching Figma) */}
       <a
         href={linkedInUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Kalvec on LinkedIn"
-        className={`inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer p-2 ${sizeClasses}`}
+        className={`inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer select-none ${sizeClasses}`}
       >
         <img
           src="/assets/linkedin-icon.png"
           alt="LinkedIn"
-          className="w-5 h-5 md:w-6 md:h-6 object-contain"
+          className="w-[26px] h-[26px] md:w-[30px] md:h-[30px] object-contain select-none"
         />
       </a>
 
-      {/* X (Twitter) Button */}
+      {/* X (Twitter) Button (26px icon in 44px container on desktop matching Figma) */}
       <a
         href={xUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Kalvec on X (Twitter)"
-        className={`inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer p-2 ${sizeClasses}`}
+        className={`inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer select-none ${sizeClasses}`}
       >
         <img
           src="/assets/x-icon.png"
           alt="X"
-          className="w-4 h-4 md:w-5 md:h-5 object-contain"
+          className="w-[22px] h-[22px] md:w-[26px] md:h-[26px] object-contain select-none"
         />
       </a>
     </div>
