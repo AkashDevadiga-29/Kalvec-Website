@@ -69,7 +69,7 @@ export default function Navbar({
             iconBg="#81222F"
             href={writeToUsUrl}
             ariaLabel="Write to us"
-            className="h-10 text-xs px-2.5"
+            className="h-10 text-xs"
           />
 
           {/* Row 2: Discuss your project */}
@@ -79,7 +79,7 @@ export default function Navbar({
             iconBg="#81222F"
             href={discussProjectUrl}
             ariaLabel="Discuss your project"
-            className="h-10 text-xs px-2.5"
+            className="h-10 text-xs"
           />
 
           {/* Row 3: Social Buttons side-by-side */}

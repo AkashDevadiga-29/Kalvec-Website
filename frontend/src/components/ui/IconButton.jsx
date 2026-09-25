@@ -29,8 +29,8 @@ export default function IconButton({
     <>
       {icon && (
         <span
-          className="flex items-center justify-center shrink-0 w-[26px] h-[26px] md:w-[30px] md:h-[30px] overflow-hidden select-none"
-          style={{ backgroundColor: iconBg }}
+          className="flex items-center justify-center shrink-0 w-[32px] h-[32px] aspect-square overflow-hidden select-none"
+          style={{ width: '32px', height: '32px', aspectRatio: '1/1', backgroundColor: iconBg }}
         >
           {icon}
         </span>

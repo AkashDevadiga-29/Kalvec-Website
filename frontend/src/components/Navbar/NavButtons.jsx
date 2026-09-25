@@ -2,78 +2,52 @@ import React from 'react';
 import IconButton from '../ui/IconButton';
 
 /**
- * Telephone handset icon SVG with metallic chrome finish for the "Discuss your project" button.
- * Matches Figma's 18px size and metallic styling.
+ * Telephone handset icon SVG for the "Discuss your project" button.
+ * Configured with exact Figma specifications: width: 32px, height: 32px, aspect-ratio: 1/1.
+ * Uses currentColor to guarantee visibility across all desktop, tablet, and mobile breakpoints.
  *
  * @param {Object} props
  * @param {string} [props.className] - Sizing and positioning classes
  */
-export function PhoneIcon({ className = 'w-[17px] h-[17px] md:w-[20px] md:h-[20px]' }) {
+export function PhoneIcon({ className = '' }) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
+      viewBox="0 0 32 32"
+      fill="currentColor"
+      className={`w-[32px] h-[32px] aspect-square text-white select-none p-1.5 ${className}`}
+      style={{ width: '32px', height: '32px', aspectRatio: '1/1' }}
       aria-hidden="true"
     >
-      <defs>
-        <linearGradient id="phone-metallic-grad" x1="15%" y1="0%" x2="85%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="25%" stopColor="#E2E8F0" />
-          <stop offset="45%" stopColor="#94A3B8" />
-          <stop offset="70%" stopColor="#F8FAFC" />
-          <stop offset="85%" stopColor="#CBD5E1" />
-          <stop offset="100%" stopColor="#64748B" />
-        </linearGradient>
-        <filter id="phone-specular" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="0.75" stdDeviation="0.5" floodColor="#000000" floodOpacity="0.4" />
-        </filter>
-      </defs>
-      <path
-        d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1C10.74 21 3 13.26 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.59 3.68a1 1 0 01-.24 1.02l-2.23 2.09z"
-        fill="url(#phone-metallic-grad)"
-        filter="url(#phone-specular)"
-      />
+      <path d="M8.83 14.39a20.07 20.07 0 008.79 8.79l2.93-2.93a1.33 1.33 0 011.36-.32 15.63 15.63 0 004.91.79 1.33 1.33 0 011.33 1.33V26.7a1.33 1.33 0 01-1.33 1.33C14.32 28.03 4 17.71 4 4.33A1.33 1.33 0 015.33 3h4.67a1.33 1.33 0 011.33 1.33 15.63 15.63 0 00.79 4.91 1.33 1.33 0 01-.32 1.36l-2.97 2.79z" />
     </svg>
   );
 }
 
 /**
- * At (@) symbol badge icon with metallic chrome gradient for "Write to us" button.
- * Matches Figma's 20px size and metallic styling.
+ * At (@) symbol badge icon for "Write to us" button.
+ * Configured with exact Figma specifications: width: 32px, height: 32px, aspect-ratio: 1/1.
+ * Uses currentColor to guarantee visibility across all desktop, tablet, and mobile breakpoints.
  *
  * @param {Object} props
  * @param {string} [props.className] - Sizing classes
  */
-export function AtIcon({ className = 'w-[17px] h-[17px] md:w-[21px] md:h-[21px]' }) {
+export function AtIcon({ className = '' }) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
+      viewBox="0 0 32 32"
+      fill="currentColor"
+      className={`w-[32px] h-[32px] aspect-square text-white select-none ${className}`}
+      style={{ width: '32px', height: '32px', aspectRatio: '1/1' }}
       aria-hidden="true"
     >
-      <defs>
-        <linearGradient id="at-metallic-grad" x1="15%" y1="0%" x2="85%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="30%" stopColor="#E2E8F0" />
-          <stop offset="50%" stopColor="#94A3B8" />
-          <stop offset="70%" stopColor="#F8FAFC" />
-          <stop offset="100%" stopColor="#CBD5E1" />
-        </linearGradient>
-        <filter id="at-specular" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="0.75" stdDeviation="0.5" floodColor="#000000" floodOpacity="0.4" />
-        </filter>
-      </defs>
       <text
-        x="12"
-        y="17.5"
+        x="16"
+        y="23"
         textAnchor="middle"
         fontFamily="sans-serif"
-        fontSize="17"
+        fontSize="21"
         fontWeight="700"
-        fill="url(#at-metallic-grad)"
-        filter="url(#at-specular)"
+        fill="currentColor"
       >
         @
       </text>

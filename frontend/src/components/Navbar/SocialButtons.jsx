@@ -19,7 +19,7 @@ export default function SocialButtons({
 }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {/* LinkedIn Button (30px icon in 44px container on desktop matching Figma) */}
+      {/* LinkedIn Button (Icon: width: 32px, height: 32px, aspect-ratio: 1/1 matching Figma) */}
       <a
         href={linkedInUrl}
         target="_blank"
@@ -30,11 +30,12 @@ export default function SocialButtons({
         <img
           src="/assets/linkedin-icon.png"
           alt="LinkedIn"
-          className="w-[26px] h-[26px] md:w-[30px] md:h-[30px] object-contain select-none"
+          className="w-[32px] h-[32px] aspect-square object-contain select-none"
+          style={{ width: '32px', height: '32px', aspectRatio: '1/1' }}
         />
       </a>
 
-      {/* X (Twitter) Button (26px icon in 44px container on desktop matching Figma) */}
+      {/* X (Twitter) Button (Icon: width: 32px, height: 32px, aspect-ratio: 1/1 matching Figma) */}
       <a
         href={xUrl}
         target="_blank"
@@ -45,7 +46,8 @@ export default function SocialButtons({
         <img
           src="/assets/x-icon.png"
           alt="X"
-          className="w-[22px] h-[22px] md:w-[26px] md:h-[26px] object-contain select-none"
+          className="w-[32px] h-[32px] aspect-square object-contain select-none"
+          style={{ width: '32px', height: '32px', aspectRatio: '1/1' }}
         />
       </a>
     </div>
