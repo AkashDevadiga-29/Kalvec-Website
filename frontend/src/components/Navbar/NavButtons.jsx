@@ -42,10 +42,11 @@ export function AtIcon({ className = '' }) {
     >
       <text
         x="16"
-        y="23"
+        y="13.5"
         textAnchor="middle"
+        dominantBaseline="central"
         fontFamily="sans-serif"
-        fontSize="21"
+        fontSize="20"
         fontWeight="700"
         fill="currentColor"
       >
