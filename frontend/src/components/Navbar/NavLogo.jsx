@@ -14,12 +14,12 @@ export default function NavLogo({ href = '/', className = '' }) {
     <a
       href={href}
       aria-label="Kalvec Home"
-      className={`inline-flex items-center justify-center bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer select-none ${className}`}
+      className={`flex flex-col items-start gap-2 w-[115px] h-[44px] shrink-0 bg-[#1A1A1A] hover:bg-[#000000] transition-colors duration-200 cursor-pointer select-none ${className}`}
     >
       <img
         src="/assets/klv-logo.png"
         alt="Kalvec"
-        className="w-[115px] h-[44px] object-contain"
+        className="w-[115px] h-[44px] object-contain select-none pointer-events-none"
       />
     </a>
   );
