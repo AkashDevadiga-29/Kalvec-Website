@@ -6,14 +6,14 @@ import React from 'react';
  * with props to supply custom destination URLs.
  *
  * @param {Object} props
- * @param {string} [props.linkedInUrl] - LinkedIn profile URL (defaults to '#')
- * @param {string} [props.xUrl] - X (Twitter) profile URL (defaults to '#')
+ * @param {string} [props.linkedInUrl] - LinkedIn profile URL (defaults to https://www.linkedin.com/company/kalvec-studio/home/)
+ * @param {string} [props.xUrl] - X (Twitter) profile URL (defaults to https://x.com/ashishdvga)
  * @param {string} [props.className] - Optional extra classes for container
  * @param {string} [props.sizeClasses] - Sizing classes for individual buttons
  */
 export default function SocialButtons({
-  linkedInUrl = '#',
-  xUrl = '#',
+  linkedInUrl = 'https://www.linkedin.com/company/kalvec-studio/home/',
+  xUrl = 'https://x.com/ashishdvga',
   className = '',
   sizeClasses = 'w-10 h-10 md:w-11 md:h-11',
 }) {

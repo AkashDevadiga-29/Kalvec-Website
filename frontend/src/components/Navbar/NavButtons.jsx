@@ -60,20 +60,20 @@ export function AtIcon({ className = '' }) {
  * NavButtons component renders the "WRITE TO US" and "DISCUSS YOUR PROJECT" action buttons.
  *
  * @param {Object} props
- * @param {string} [props.writeToUsUrl] - Contact/Email URL (e.g. mailto:hello@kalvec.com)
+ * @param {string} [props.writeToUsUrl] - Contact/Email URL (defaults to mailto:ashish@kalvec.com)
  * @param {string} [props.discussProjectUrl] - Meeting/Cal URL or phone link
  * @param {string} [props.className] - Container layout classes
  * @param {string} [props.buttonHeight] - Custom height class for mobile vs desktop
  */
 export default function NavButtons({
-  writeToUsUrl = '#',
+  writeToUsUrl = 'mailto:ashish@kalvec.com',
   discussProjectUrl = '#',
   className = '',
   buttonHeight = '',
 }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {/* WRITE TO US Button */}
+      {/* WRITE TO US Button — mailto: opens the user's configured email client */}
       <IconButton
         label="WRITE TO US"
         icon={<AtIcon />}

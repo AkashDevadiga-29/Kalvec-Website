@@ -12,17 +12,17 @@ import SocialButtons from './SocialButtons';
  *   (Write to us -> Discuss project -> Social icons).
  *
  * @param {Object} props
- * @param {string} [props.writeToUsUrl] - URL for "Write to us"
+ * @param {string} [props.writeToUsUrl] - URL for "Write to us" (defaults to mailto:ashish@kalvec.com)
  * @param {string} [props.discussProjectUrl] - URL for "Discuss your project"
- * @param {string} [props.linkedInUrl] - URL for LinkedIn
- * @param {string} [props.xUrl] - URL for X (Twitter)
+ * @param {string} [props.linkedInUrl] - URL for LinkedIn (defaults to Kalvec LinkedIn)
+ * @param {string} [props.xUrl] - URL for X / Twitter (defaults to https://x.com/ashishdvga)
  * @param {string} [props.className] - Optional container classes
  */
 export default function Navbar({
-  writeToUsUrl = '#',
+  writeToUsUrl = 'mailto:ashish@kalvec.com',
   discussProjectUrl = '#',
-  linkedInUrl = '#',
-  xUrl = '#',
+  linkedInUrl = 'https://www.linkedin.com/company/kalvec-studio/home/',
+  xUrl = 'https://x.com/ashishdvga',
   className = '',
 }) {
   return (
@@ -62,7 +62,7 @@ export default function Navbar({
 
         {/* Right: Stacked Action Buttons */}
         <div className="flex flex-col items-end gap-1.5">
-          {/* Row 1: Write to us */}
+          {/* Row 1: Write to us — mailto: opens the user's configured email client */}
           <IconButton
             label="WRITE TO US"
             icon={<AtIcon />}

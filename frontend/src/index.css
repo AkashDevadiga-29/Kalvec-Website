@@ -15,24 +15,28 @@
   --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Base resets & typography */
+/* Base resets & typography: strictly locked to viewport to prevent scrolling */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  height: 100dvh;
   background-color: #81222F;
   font-family: var(--font-sans);
   color: #FFFFFF;
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 #root {
-  min-height: 100vh;
+  height: 100%;
+  height: 100dvh;
   width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Custom text utility for tight serif headings */
@@ -54,7 +58,7 @@ html, body {
     opacity: 0;
     filter: blur(4px);
   }
-  20%, 80% {
+  16%, 84% {
     transform: translateY(0);
     opacity: 1;
     filter: blur(0);

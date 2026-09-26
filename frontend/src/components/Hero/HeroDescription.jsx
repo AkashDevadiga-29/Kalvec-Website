@@ -10,9 +10,9 @@ import LogoCarousel from './LogoCarousel';
  */
 export default function HeroDescription({ className = '' }) {
   return (
-    <div className={`flex flex-col gap-4 md:gap-5 max-w-[466px] w-full ${className}`}>
+    <div className={`flex flex-col gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 max-w-[466px] w-full ${className}`}>
       {/* Agency Sub-description */}
-      <p className="font-body font-medium text-white text-[14px] leading-[21px] md:text-[20px] md:leading-[30px] lg:text-[24px] lg:leading-[36px] tracking-normal select-none">
+      <p className="font-body font-medium text-white text-[12.5px] leading-[18px] min-[360px]:text-[13.5px] min-[360px]:leading-[20px] md:text-[18px] md:leading-[27px] lg:text-[22px] lg:leading-[33px] xl:text-[24px] xl:leading-[36px] tracking-normal select-none">
         We make Shopify stores for DTC brands, beautiful Framer websites and design driven software.
       </p>
 

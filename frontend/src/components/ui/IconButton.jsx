@@ -14,6 +14,8 @@ import React from 'react';
  * @param {boolean} [props.isSquare] - If true, renders a square icon-only button (e.g., 40x40)
  * @param {string} [props.ariaLabel] - Accessibility label
  * @param {function} [props.onClick] - Optional click handler
+ * @param {string} [props.target] - Link target attribute (e.g., '_blank')
+ * @param {string} [props.rel] - Link rel attribute (e.g., 'noopener noreferrer')
  */
 export default function IconButton({
   icon,
@@ -24,6 +26,8 @@ export default function IconButton({
   isSquare = false,
   ariaLabel,
   onClick,
+  target,
+  rel,
 }) {
   const content = (
     <>
@@ -53,6 +57,8 @@ export default function IconButton({
   return (
     <a
       href={href}
+      target={target}
+      rel={rel}
       onClick={onClick}
       aria-label={ariaLabel || label}
       className={`${baseStyles} ${shapeStyles} ${className}`}

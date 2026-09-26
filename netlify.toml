@@ -1,0 +1,13 @@
+# Netlify configuration file for Kalvec Website
+# Automatically configures the Vite frontend in the subfolder
+
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "npm run build"
+
+# Single-Page Application (SPA) redirect rule
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

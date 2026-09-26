@@ -28,33 +28,58 @@ const LOGO_POOLS = [
   ],
 ];
 
+/** Stagger delay between each slot in ms */
+const STAGGER_MS = 250;
+
 /**
  * SingleLogoSlot renders an individual logo container matching Figma's 3-card design.
- * Features the Altalogy-style vertical moveUp animation with blur and opacity easing.
- * Synchronized with adjacent cards to slide up simultaneously in lockstep.
+ * Each slot manages its own animation cycle independently so the stagger
+ * applies to both entry and exit of the logo.
  *
  * @param {Object} props
- * @param {Object} props.logo - Currently active logo object {name, src}
+ * @param {Array} props.pool - Array of logo objects for this slot
  * @param {number} props.slotIndex - Index of the slot (0, 1, or 2)
- * @param {number} props.cycleIndex - Current cycle iteration count
- * @param {boolean} props.isAnimating - Whether the moveUp animation is currently active
  * @param {boolean} props.isPaused - Whether animation is paused via hover
  * @param {number} props.cycleDuration - Full animation cycle duration in ms
+ * @param {number} props.initialDelay - Initial delay before animation starts (includes stagger)
  */
 function SingleLogoSlot({
-  logo,
+  pool,
   slotIndex,
-  cycleIndex,
-  isAnimating,
   isPaused,
   cycleDuration,
+  initialDelay,
 }) {
+  const [localIndex, setLocalIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    let intervalId;
+
+    // Initial display period + stagger offset before this slot's animation begins
+    const startTimer = setTimeout(() => {
+      setIsAnimating(true);
+      intervalId = setInterval(() => {
+        if (!isPaused) {
+          setLocalIndex((prev) => (prev + 1) % pool.length);
+        }
+      }, cycleDuration);
+    }, initialDelay);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [isPaused, cycleDuration, initialDelay, pool.length]);
+
+  const logo = pool[localIndex];
+
   return (
     <div
-      className="flex-1 md:w-[150px] md:flex-initial h-[58px] md:h-[72px] bg-black/20 hover:bg-black/30 backdrop-blur-[4px] flex items-center justify-center p-3 md:px-5 relative overflow-hidden select-none cursor-pointer transition-colors duration-200"
+      className="flex-1 md:w-[150px] md:flex-initial h-[46px] min-[360px]:h-[50px] sm:h-[58px] md:h-[68px] lg:h-[72px] bg-black/20 hover:bg-black/30 backdrop-blur-[4px] flex items-center justify-center p-2 sm:p-3 md:px-5 relative overflow-hidden select-none cursor-pointer transition-colors duration-200"
     >
       <div
-        key={`${slotIndex}-${cycleIndex}`}
+        key={`${slotIndex}-${localIndex}`}
         className={`w-full h-full flex items-center justify-center ${
           isAnimating && !isPaused ? 'animate-altalogy-logo' : ''
         }`}
@@ -65,7 +90,7 @@ function SingleLogoSlot({
         <img
           src={logo.src}
           alt={logo.name}
-          className="max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100 transition-opacity duration-200"
+          className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100 transition-opacity duration-200"
           loading="lazy"
         />
       </div>
@@ -75,37 +100,18 @@ function SingleLogoSlot({
 
 /**
  * LogoCarousel component renders 3 separate client logo containers in a row matching Figma.
- * Preserves the Figma design (3 separate cards with 8px gap) while incorporating
- * the Altalogy-style vertical slide-up animation with blur easing.
- * All 3 cards slide up simultaneously at the exact same time.
+ * Each card has its own independent animation cycle offset by STAGGER_MS so logos
+ * animate one by one (left → middle → right) for both entry and exit.
  *
  * @param {Object} props
  * @param {string} [props.className] - Optional container classes
  */
 export default function LogoCarousel({ className = '' }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const cycleDuration = 3400;
-  const initialDelay = 2000;
-
-  useEffect(() => {
-    let intervalId;
-    // Initial display period before synchronized animations start
-    const initialTimer = setTimeout(() => {
-      setIsAnimating(true);
-      intervalId = setInterval(() => {
-        if (!isPaused) {
-          setCurrentIndex((prev) => (prev + 1) % LOGO_POOLS[0].length);
-        }
-      }, cycleDuration);
-    }, initialDelay);
-
-    return () => {
-      clearTimeout(initialTimer);
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [isPaused, cycleDuration, initialDelay]);
+  // Full cycle duration increased to allow all cards to remain visible and readable longer
+  const cycleDuration = 4400;
+  // Initial delay before the first animation cycle triggers
+  const baseDelay = 2600;
 
   return (
     <div
@@ -117,12 +123,11 @@ export default function LogoCarousel({ className = '' }) {
       {LOGO_POOLS.map((pool, index) => (
         <SingleLogoSlot
           key={index}
-          logo={pool[currentIndex]}
+          pool={pool}
           slotIndex={index}
-          cycleIndex={currentIndex}
-          isAnimating={isAnimating}
           isPaused={isPaused}
           cycleDuration={cycleDuration}
+          initialDelay={baseDelay + index * STAGGER_MS}
         />
       ))}
     </div>

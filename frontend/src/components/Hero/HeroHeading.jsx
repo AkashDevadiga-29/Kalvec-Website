@@ -12,7 +12,7 @@ import React from 'react';
 export default function HeroHeading({ className = '' }) {
   return (
     <h1
-      className={`font-sans font-semibold text-white/80 text-justify tracking-[-3.36px] md:tracking-[-6.4px] leading-[100%] text-[38px] min-[390px]:text-[42px] md:text-[68px] lg:text-[80px] w-full max-w-[600px] select-none ${className}`}
+      className={`font-sans font-semibold text-white/80 text-justify tracking-[-2px] sm:tracking-[-3.2px] md:tracking-[-5px] lg:tracking-[-6.4px] leading-[102%] text-[30px] min-[360px]:text-[34px] min-[390px]:text-[40px] md:text-[60px] lg:text-[72px] xl:text-[80px] w-full max-w-[600px] select-none ${className}`}
     >
       Tastefully building software, for the love of the craft
     </h1>
