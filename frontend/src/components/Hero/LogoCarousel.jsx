@@ -29,7 +29,7 @@ const LOGO_POOLS = [
 ];
 
 /** Transition duration in ms for the smooth float */
-const TRANSITION_DURATION = 850;
+const TRANSITION_DURATION = 1300;
 
 /**
  * LogoSlot renders an individual logo card with smooth CSS transitions.
@@ -177,13 +177,13 @@ export default function LogoCarousel({ className = '' }) {
         setSlotSteps((prev) => [prev[0], prev[1], prev[2] + 1]);
       }, 2900);
 
-      // Slot 2 finishes its 850ms transition at 2900 + 850 = 3750ms.
-      // Calling triggerWave at 3750ms starts the 2000ms hold for the next wave,
+      // Slot 2 finishes its 1300ms transition at 2900 + 1300 = 4200ms.
+      // Calling triggerWave at 4200ms starts the 2000ms hold for the next wave,
       // so cards rest for exactly 2.0s before the left card flips again.
       const nextWaveTimer = setTimeout(() => {
         if (isStopped) return;
         triggerWave();
-      }, 3750);
+      }, 4200);
 
       timeoutIds.push(t0, t1, t2, nextWaveTimer);
     };
