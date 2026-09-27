@@ -68,7 +68,7 @@ function LogoSlot({ pool, step }) {
 
   return (
     <div
-      className="flex-1 md:w-[150px] md:flex-initial h-[46px] min-[360px]:h-[50px] sm:h-[58px] md:h-[68px] lg:h-[72px] bg-black/20 backdrop-blur-[4px] flex items-center justify-center p-2 sm:p-3 md:px-5 relative overflow-hidden select-none"
+      className="flex-1 md:w-[150px] md:flex-initial h-[50px] sm:h-[58px] md:h-[72px] bg-black/20 backdrop-blur-[2px] flex items-center justify-center p-2 sm:p-3 md:py-4 md:px-6 relative overflow-hidden select-none"
     >
       <div className="relative w-full h-full flex items-center justify-center">
         {pool.map((logo, index) => {
@@ -111,7 +111,7 @@ function LogoSlot({ pool, step }) {
               <img
                 src={logo.src}
                 alt={logo.name}
-                className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100"
+                className="max-h-[26px] sm:max-h-[32px] md:max-h-[40px] max-w-[85%] md:max-w-[102px] w-auto object-contain filter brightness-100"
                 loading="eager"
               />
             </div>
