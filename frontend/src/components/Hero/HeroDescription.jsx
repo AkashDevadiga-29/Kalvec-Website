@@ -12,7 +12,7 @@ export default function HeroDescription({ className = '' }) {
   return (
     <div className={`flex flex-col gap-2.5 sm:gap-3.5 md:gap-4 lg:gap-5 max-w-[466px] w-full ${className}`}>
       {/* Agency Sub-description */}
-      <p className="font-body font-medium text-white text-[12.5px] leading-[18px] min-[360px]:text-[13.5px] min-[360px]:leading-[20px] md:text-[18px] md:leading-[27px] lg:text-[22px] lg:leading-[33px] xl:text-[24px] xl:leading-[36px] tracking-normal select-none">
+      <p className="font-sans font-medium text-white text-[13px] leading-[20px] min-[360px]:text-[14px] min-[360px]:leading-[21px] sm:text-[18px] sm:leading-[27px] md:text-[24px] md:leading-[36px] w-full md:w-[466px] tracking-normal select-none">
         We make Shopify stores for DTC brands, beautiful Framer websites and design driven software.
       </p>
 
