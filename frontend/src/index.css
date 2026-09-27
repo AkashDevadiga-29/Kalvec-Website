@@ -48,44 +48,5 @@ html, body {
   font-family: var(--font-sans);
 }
 
-/**
- * Altalogy-style logo slide transitions
- * Slide out: moves upwards and fades out with subtle blur
- * Slide in: moves in from bottom upwards and clarifies
- */
-@keyframes altalogySlideOut {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0);
-  }
-  100% {
-    transform: translateY(-24px);
-    opacity: 0;
-    filter: blur(4px);
-  }
-}
 
-@keyframes altalogySlideIn {
-  0% {
-    transform: translateY(24px);
-    opacity: 0;
-    filter: blur(4px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-.animate-altalogy-slide-out {
-  animation: altalogySlideOut 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  will-change: transform, filter, opacity;
-}
-
-.animate-altalogy-slide-in {
-  animation: altalogySlideIn 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  will-change: transform, filter, opacity;
-}
 

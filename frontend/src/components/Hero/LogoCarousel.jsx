@@ -29,180 +29,169 @@ const LOGO_POOLS = [
 ];
 
 /**
- * Trigger delays for the slide-up animation in each slot:
- * - Slot 0 (left): triggers after 2000ms (2.0s)
- * - Slot 1 (middle): triggers after 2400ms (2.4s)
- * - Slot 2 (right): triggers after 2800ms (2.8s)
- */
-const TRIGGER_DELAYS = [2000, 2400, 2800];
-
-/** Duration of the slide-up animation in ms */
-const FLIP_DURATION = 500;
-
-/** Total cycle duration in ms before repeating the wave */
-const CYCLE_DURATION = 4400;
-
-/**
- * LogoSlot renders an individual logo card with smooth slide-up transition.
- * When isFlipping is true, it renders the outgoing logo sliding up and fading out,
- * while the incoming logo slides in from below.
+ * LogoSlot renders an individual logo card using a hardware-accelerated vertical reel.
+ * All logos in the pool are pre-rendered into the DOM to eliminate image flashing, layout recalculation,
+ * or unmounting glitches. A cloned copy of the first logo is appended to ensure seamless loop wrap-around.
  *
  * @param {Object} props
  * @param {Array} props.pool - Array of logo objects for this slot
- * @param {number} props.currentIndex - Current logo index
- * @param {boolean} props.isFlipping - Whether this slot is actively executing a slide-up transition
+ * @param {number} props.step - Monotonically increasing step counter from the master timer
  */
-function LogoSlot({ pool, currentIndex, isFlipping }) {
-  const currentLogo = pool[currentIndex];
-  const nextIndex = (currentIndex + 1) % pool.length;
-  const nextLogo = pool[nextIndex];
+function LogoSlot({ pool, step }) {
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
+  // Extended pool has the first logo cloned at the end for seamless wrap-around
+  const extendedPool = [...pool, pool[0]];
+
+  useEffect(() => {
+    if (step === 0) return;
+    setIsTransitioning(true);
+    // target index in the extended pool (0 to pool.length)
+    const targetIdx = step % pool.length === 0 ? pool.length : step % pool.length;
+    setDisplayIndex(targetIdx);
+  }, [step, pool.length]);
+
+  /**
+   * Called when the CSS transition finishes.
+   * If we reached the cloned first logo at the end of extendedPool,
+   * snap back to index 0 instantly without transition so subsequent flips continue upward seamlessly.
+   */
+  const handleTransitionEnd = () => {
+    if (displayIndex >= pool.length) {
+      setIsTransitioning(false);
+      setDisplayIndex(0);
+    }
+  };
 
   return (
     <div
       className="flex-1 md:w-[150px] md:flex-initial h-[46px] min-[360px]:h-[50px] sm:h-[58px] md:h-[68px] lg:h-[72px] bg-black/20 backdrop-blur-[4px] flex items-center justify-center p-2 sm:p-3 md:px-5 relative overflow-hidden select-none"
     >
-      {isFlipping ? (
-        <div className="relative w-full h-full flex items-center justify-center">
-          {/* Outgoing logo sliding up and fading out */}
-          <div className="absolute inset-0 flex items-center justify-center animate-altalogy-slide-out pointer-events-none">
-            <img
-              src={currentLogo.src}
-              alt={currentLogo.name}
-              className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100"
-            />
-          </div>
-          {/* Incoming logo sliding in from below */}
-          <div className="absolute inset-0 flex items-center justify-center animate-altalogy-slide-in pointer-events-none">
-            <img
-              src={nextLogo.src}
-              alt={nextLogo.name}
-              className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100"
-            />
-          </div>
+      <div className="relative w-full h-full overflow-hidden">
+        <div
+          className={`w-full h-full flex flex-col ${
+            isTransitioning
+              ? 'transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]'
+              : ''
+          }`}
+          style={{
+            transform: `translateY(-${displayIndex * 100}%)`,
+          }}
+          onTransitionEnd={handleTransitionEnd}
+        >
+          {extendedPool.map((logo, i) => (
+            <div
+              key={i}
+              className="w-full h-full flex-shrink-0 flex items-center justify-center"
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100"
+                loading="eager"
+              />
+            </div>
+          ))}
         </div>
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <img
-            src={currentLogo.src}
-            alt={currentLogo.name}
-            className="max-h-[24px] sm:max-h-[30px] md:max-h-[38px] max-w-[85%] w-auto object-contain filter brightness-100"
-          />
-        </div>
-      )}
+      </div>
     </div>
   );
 }
 
 /**
  * LogoCarousel component renders 3 client logo cards in a synchronized row.
- * Controlled by a single master timer:
+ * Controlled by a single master recursive timer:
  * - Hold still for 2.0s
  * - Slot 0 (left) slides up at 2.0s
- * - Slot 1 (middle) slides up at 2.4s
- * - Slot 2 (right) slides up at 2.8s
- * - Full cycle repeats every 4.4s
+ * - Slot 1 (middle) slides up at 2.4s (+400ms)
+ * - Slot 2 (right) slides up at 2.8s (+800ms)
+ * - Slot 2 finishes sliding up at 3.3s
+ * - Exactly 2.0s hold before the next wave triggers
  * - Uses Page Visibility API to freeze and cleanly reset timers when browser tab is inactive.
- * - Hover pause removed for seamless, uninterrupted animation.
+ * - Hardware-accelerated vertical reels with zero DOM teardown to eliminate flickers and skips.
  *
  * @param {Object} props
  * @param {string} [props.className] - Optional container classes
  */
 export default function LogoCarousel({ className = '' }) {
-  const [slots, setSlots] = useState([
-    { index: 0, isFlipping: false },
-    { index: 0, isFlipping: false },
-    { index: 0, isFlipping: false },
-  ]);
+  const [slotSteps, setSlotSteps] = useState([0, 0, 0]);
 
   useEffect(() => {
-    // Preload all logos into browser memory to eliminate image loading lag
-    LOGO_POOLS.forEach((pool) => {
-      pool.forEach((item) => {
-        const img = new Image();
-        img.src = item.src;
-      });
-    });
-
-    const activeTimeouts = [];
-    let cycleTimer = null;
+    let timeoutIds = [];
+    let isStopped = false;
 
     /**
-     * Executes one synchronized wave across all slots based on TRIGGER_DELAYS.
+     * Executes one synchronized wave across all slots:
+     * Left at 2.0s, Middle at 2.4s, Right at 2.8s, then schedules next wave after 2.0s hold.
      */
-    const runWave = () => {
-      // Clear any pending timeouts from previous wave
-      activeTimeouts.forEach(clearTimeout);
-      activeTimeouts.length = 0;
+    const triggerWave = () => {
+      if (isStopped) return;
 
-      TRIGGER_DELAYS.forEach((delay, slotIdx) => {
-        // Start slide-up animation
-        const startTimer = setTimeout(() => {
-          setSlots((prev) =>
-            prev.map((s, i) => (i === slotIdx ? { ...s, isFlipping: true } : s))
-          );
+      // Slot 0 (left) after 2000ms
+      const t0 = setTimeout(() => {
+        if (isStopped) return;
+        setSlotSteps((prev) => [prev[0] + 1, prev[1], prev[2]]);
+      }, 2000);
 
-          // Complete slide-up animation and advance logo index
-          const endTimer = setTimeout(() => {
-            setSlots((prev) =>
-              prev.map((s, i) =>
-                i === slotIdx
-                  ? {
-                      index: (s.index + 1) % LOGO_POOLS[slotIdx].length,
-                      isFlipping: false,
-                    }
-                  : s
-              )
-            );
-          }, FLIP_DURATION);
+      // Slot 1 (middle) after 2400ms (+400ms)
+      const t1 = setTimeout(() => {
+        if (isStopped) return;
+        setSlotSteps((prev) => [prev[0], prev[1] + 1, prev[2]]);
+      }, 2400);
 
-          activeTimeouts.push(endTimer);
-        }, delay);
+      // Slot 2 (right) after 2800ms (+800ms)
+      const t2 = setTimeout(() => {
+        if (isStopped) return;
+        setSlotSteps((prev) => [prev[0], prev[1], prev[2] + 1]);
+      }, 2800);
 
-        activeTimeouts.push(startTimer);
-      });
+      // Slot 2 finishes flip at 2800 + 500 = 3300ms.
+      // Calling triggerWave at 3300ms immediately starts the 2000ms hold for the next wave,
+      // so cards rest for exactly 2.0s before the left card flips again.
+      const nextWaveTimer = setTimeout(() => {
+        if (isStopped) return;
+        triggerWave();
+      }, 3300);
+
+      timeoutIds.push(t0, t1, t2, nextWaveTimer);
     };
 
     /**
-     * Starts the master loop.
+     * Starts the carousel cycle.
      */
-    const startMasterTimer = () => {
-      runWave();
-      cycleTimer = setInterval(runWave, CYCLE_DURATION);
+    const start = () => {
+      isStopped = false;
+      triggerWave();
     };
 
     /**
-     * Stops the master loop and clears all pending timeouts.
-     * Resets any in-progress flip to avoid stuck states.
+     * Stops the carousel and clears all scheduled timers.
      */
-    const stopMasterTimer = () => {
-      if (cycleTimer) {
-        clearInterval(cycleTimer);
-        cycleTimer = null;
-      }
-      activeTimeouts.forEach(clearTimeout);
-      activeTimeouts.length = 0;
-      setSlots((prev) => prev.map((s) => ({ ...s, isFlipping: false })));
+    const stop = () => {
+      isStopped = true;
+      timeoutIds.forEach(clearTimeout);
+      timeoutIds = [];
     };
 
     /**
-     * Page Visibility handler:
-     * Pauses the timer when the tab is hidden (preventing browser callback pileups).
-     * Restarts cleanly from t=0 when the tab is refocused.
+     * Page Visibility API handler:
+     * Freezes timers when tab is hidden, restarts cleanly from t=0 when tab is refocused.
      */
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        stopMasterTimer();
+        stop();
       } else {
-        stopMasterTimer();
-        startMasterTimer();
+        stop();
+        start();
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    startMasterTimer();
+    start();
 
     return () => {
-      stopMasterTimer();
+      stop();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
@@ -216,8 +205,7 @@ export default function LogoCarousel({ className = '' }) {
         <LogoSlot
           key={index}
           pool={pool}
-          currentIndex={slots[index].index}
-          isFlipping={slots[index].isFlipping}
+          step={slotSteps[index]}
         />
       ))}
     </div>
