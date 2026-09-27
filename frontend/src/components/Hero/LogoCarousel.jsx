@@ -161,13 +161,13 @@ export default function LogoCarousel({ className = '' }) {
         setSlotSteps((prev) => [prev[0], prev[1], prev[2] + 1]);
       }, 2800);
 
-      // Slot 2 finishes flip at 2800 + 600 = 3400ms.
-      // Calling triggerWave at 3400ms immediately starts the 2000ms hold for the next wave,
+      // Slot 2 finishes flip at 2800 + 1000 = 3800ms.
+      // Calling triggerWave at 3800ms starts the 2000ms hold for the next wave,
       // so cards rest for exactly 2.0s before the left card flips again.
       const nextWaveTimer = setTimeout(() => {
         if (isStopped) return;
         triggerWave();
-      }, 3400);
+      }, 3800);
 
       timeoutIds.push(t0, t1, t2, nextWaveTimer);
     };
