@@ -47,44 +47,5 @@ html, body {
 .font-body {
   font-family: var(--font-sans);
 }
-/**
- * Altalogy-style logo float transitions
- * Slide out: floats upwards by 24px, dissolves with subtle blur
- * Slide in: floats in from 24px below, clarifies and settles into center
- */
-@keyframes altalogyExit {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-  100% {
-    transform: translateY(-24px);
-    opacity: 0;
-    filter: blur(4px);
-  }
-}
 
-@keyframes altalogyEnter {
-  0% {
-    transform: translateY(24px);
-    opacity: 0;
-    filter: blur(4px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-    filter: blur(0px);
-  }
-}
-
-.animate-altalogy-exit {
-  animation: altalogyExit 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity, filter;
-}
-
-.animate-altalogy-enter {
-  animation: altalogyEnter 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity, filter;
-}
 
