@@ -11,13 +11,13 @@ import React, { useEffect, useRef, useState } from 'react';
  *   and clarifies into focus (filter: blur(0px)) so it never pops up abruptly.
  *
  * @param {Object} props
- * @param {number} [props.opacity=1] - Layer opacity (default 1 / 100%)
+ * @param {number} [props.opacity=0.3] - Layer opacity (default 0.3)
  * @param {number} [props.delay=300] - Entrance delay in ms before fade/clarify begins
  * @param {string} [props.className=''] - Additional CSS classes
  * @param {React.CSSProperties} [props.style={}] - Inline styling (e.g. positioning / rotation transforms)
  */
 export default function AsciiFlowerAnimation({
-  opacity = 1,
+  opacity = 0.3,
   delay = 300,
   className = '',
   style = {},
