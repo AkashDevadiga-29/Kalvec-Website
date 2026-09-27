@@ -98,16 +98,18 @@ export default function Hero({
             />
           </div>
 
-          {/* Right upright flower (id: 548:23 in Figma) */}
-          {/* Figma Dev Mode: left: 414px; top: 177px; width: 480px; height: 854px; */}
+          {/* Bottom upright flower (ascii_flower_pollen 1 in Figma) */}
+          {/* Figma Dev Mode: right: -84px; bottom: -170px; width: 480px; height: 854px; aspect-ratio: 77/137; opacity: 0.3; */}
           <AsciiFlowerAnimation
             className="absolute"
+            opacity={0.3}
             style={{
               position: 'absolute',
-              left: 414,
-              top: 177,
+              right: -84,
+              bottom: -170,
               width: 480,
               height: 854,
+              aspectRatio: '77 / 137',
             }}
           />
         </div>
