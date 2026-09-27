@@ -49,16 +49,12 @@ html, body {
 }
 
 /**
- * Altalogy-style logo carousel animation
- * Staggered moveUp transition with blur and opacity easing
+ * Altalogy-style logo slide transitions
+ * Slide out: moves upwards and fades out with subtle blur
+ * Slide in: moves in from bottom upwards and clarifies
  */
-@keyframes altalogyMoveUp {
+@keyframes altalogySlideOut {
   0% {
-    transform: translateY(24px);
-    opacity: 0;
-    filter: blur(4px);
-  }
-  16%, 84% {
     transform: translateY(0);
     opacity: 1;
     filter: blur(0);
@@ -70,8 +66,26 @@ html, body {
   }
 }
 
-.animate-altalogy-logo {
-  animation: altalogyMoveUp 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+@keyframes altalogySlideIn {
+  0% {
+    transform: translateY(24px);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.animate-altalogy-slide-out {
+  animation: altalogySlideOut 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, filter, opacity;
+}
+
+.animate-altalogy-slide-in {
+  animation: altalogySlideIn 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   will-change: transform, filter, opacity;
 }
 
