@@ -67,7 +67,7 @@ export function AtIcon({ className = '' }) {
  */
 export default function NavButtons({
   writeToUsUrl = 'mailto:ashish@kalvec.com',
-  discussProjectUrl = '#',
+  discussProjectUrl = 'https://cal.com/ashish-devadiga-wmxsna/30min',
   className = '',
   buttonHeight = '',
 }) {
@@ -89,6 +89,8 @@ export default function NavButtons({
         icon={<PhoneIcon />}
         iconBg="#81222F"
         href={discussProjectUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         ariaLabel="Discuss your project"
         className={buttonHeight}
       />

@@ -9,7 +9,7 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-[#81222F]">
       {/* Primary Hero Section */}
-      <Hero />
+      <Hero discussProjectUrl="https://cal.com/ashish-devadiga-wmxsna/30min" />
     </div>
   );
 }

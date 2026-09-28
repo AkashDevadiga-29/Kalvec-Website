@@ -18,7 +18,7 @@ import AsciiFlowerAnimation from './AsciiFlowerAnimation';
  */
 export default function Hero({
   writeToUsUrl = 'mailto:ashish@kalvec.com',
-  discussProjectUrl = '#',
+  discussProjectUrl = 'https://cal.com/ashish-devadiga-wmxsna/30min',
   linkedInUrl = 'https://www.linkedin.com/company/kalvec-studio/home/',
   xUrl = 'https://x.com/ashishdvga',
 }) {

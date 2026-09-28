@@ -20,7 +20,7 @@ import SocialButtons from './SocialButtons';
  */
 export default function Navbar({
   writeToUsUrl = 'mailto:ashish@kalvec.com',
-  discussProjectUrl = '#',
+  discussProjectUrl = 'https://cal.com/ashish-devadiga-wmxsna/30min',
   linkedInUrl = 'https://www.linkedin.com/company/kalvec-studio/home/',
   xUrl = 'https://x.com/ashishdvga',
   className = '',
@@ -78,6 +78,8 @@ export default function Navbar({
             icon={<PhoneIcon />}
             iconBg="#81222F"
             href={discussProjectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             ariaLabel="Discuss your project"
             className="h-10 text-xs"
           />
